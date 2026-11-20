@@ -146,8 +146,20 @@
   .tablero { display: flex; flex-wrap: wrap; gap: 8px 14px; font-variant-numeric: tabular-nums; font-size: .95rem; }
   .tablero span { background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 6px 10px; }
   #tablaProy th { white-space: normal; }
+  .mini-ej { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+  @media (max-width: 560px) { .mini-ej { grid-template-columns: 1fr 1fr; } }
+  .mini-ej figure { margin: 0; background: #fff; border: 1px solid var(--line); border-radius: 6px; overflow: hidden; }
+  .mini-ej canvas { display: block; width: 100%; }
+  .mini-ej figcaption { font-size: .8rem; padding: 4px 6px; color: var(--ink); background: var(--surface); }
+  #tablaClasif select { width: 100%; min-width: 0; padding: 6px 4px; }
+  #tablaClasif th, #tablaClasif td { padding: 5px 4px; }
+
+  #tablaClasif td:first-child { text-align: left; }
+  .conj-op { margin: 4px 0 6px; }
+  .conj-op .flabel { font-weight: 500; font-size: .95rem; margin: 6px 0 4px; }
   .conj { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 6px 0; }
   .ecuacion { font-family: var(--serif); font-size: 1.1rem; background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 8px 12px; display: inline-block; }
+  @media (max-width: 560px) { .conj { grid-template-columns: 1fr; } #tablaClasif { font-size: .85rem; } }
 </style>
 <script>/* jsPDF 2.5.1 (MIT) incluido para no depender de internet */
 /** @license
@@ -580,22 +592,48 @@ function(t){t.__bidiEngine__=t.prototype.__bidiEngine__=function(t){var r,n,i,a,
   <!-- MOMENTO 1 -->
   <section class="card" aria-labelledby="m1">
     <div class="act"><span class="num">1</span><h2 id="m1">Conjetura y construye diagramas de dispersión<span class="apr">Aprendizajes 1, 2, 6, 7 y 8 · Relación entre dos variables cuantitativas</span></h2></div>
-    <p>Un <b>diagrama de dispersión</b> coloca cada par (<i>x</i>, <i>y</i>) como un punto. La relación puede ser <b>positiva</b> (cuando una variable crece, la otra tiende a crecer) o <b>negativa</b> (cuando una crece, la otra tiende a disminuir), y su <b>grado de linealidad</b> puede ser <b>nulo, débil, moderado o fuerte</b>, según qué tanto se parezca la nube de puntos a una línea recta.</p>
-    <h3>Paso 1. Antes de construir los diagramas, escribe tus conjeturas</h3>
+    <p>En la muestra, de cada estudiante tenemos varias medidas. Cuando observamos <b>dos</b> de ellas al mismo tiempo, podemos preguntarnos si están relacionadas: si cuando una cambia, la otra también tiende a cambiar.</p>
+    <h3>Paso 1. Antes de ver los datos, ¿qué crees que pasa?</h3>
+    <p>Abajo hay cuatro parejas de medidas. Para <b>cada pareja</b> contesta tres cosas:</p>
+    <ol style="margin:0 0 8px;padding-left:22px">
+      <li><b>¿Qué crees que pasa?</b> Si un estudiante tiene <b>más</b> de la primera medida, ¿qué pasa con la segunda: tiende a ser mayor, tiende a ser menor o no tiene que ver?</li>
+      <li><b>¿Qué tan seguido?</b> Piensa en muchos estudiantes: ¿eso pasa en casi todos, en la mayoría o solo en algunos?</li>
+      <li><b>¿Por qué?</b> Explica con tus palabras.</li>
+    </ol>
+    <div class="nota"><b>Ejemplo resuelto.</b> Si un niño de primaria tiene más edad que otro, ¿qué crees que pasa con su estatura?<br>
+      <b>a)</b> Tiende a ser más alto. &nbsp; <b>b)</b> Muchas veces: casi siempre el mayor es más alto, pero hay niños menores que son más altos que otros mayores. &nbsp; <b>c)</b> Porque los niños crecen con la edad, pero no todos crecen igual.</div>
+    <p class="hint">No hay respuestas incorrectas: después lo comprobarás con los datos.</p>
     <div id="conjeturas"></div>
-    <h3>Paso 2. Construye cada diagrama en el simulador y contrasta</h3>
-    <p>Elige cada pareja en el menú <b>Datos</b> del simulador. Observa la nube de puntos y compárala con tu conjetura. Guarda la imagen de los diagramas que quieras incluir en tu reporte.</p>
+    <h3>Paso 2. Construye cada diagrama en el simulador</h3>
+    <div class="nota"><b>Definición.</b> Un <b>diagrama de dispersión</b> es una gráfica que representa datos bivariados de dos variables cuantitativas. Cada elemento de la muestra (en este caso, cada estudiante) se dibuja como un <b>punto</b> cuyas coordenadas son sus dos valores: el de una variable en el eje horizontal (<i>x</i>) y el de la otra en el eje vertical (<i>y</i>). La forma en que se acomoda la <b>nube de puntos</b> permite ver si las variables están relacionadas.<br>
+      <span class="hint">Por ejemplo, un estudiante con 70 cm de brazo y 20.4 cm de palmo se dibuja en el punto (70, 20.4).</span></div>
+    <p>Elige cada pareja en el menú <b>Datos</b> del simulador y observa cómo se acomodan los puntos. Guarda la imagen de los diagramas que quieras incluir en tu reporte.</p>
     <div id="sim1"></div>
+    <h3>Paso 3. Ponle nombre a lo que observaste</h3>
+    <div class="nota">
+      <p style="margin-top:0">Lo que describiste con tus palabras tiene un nombre en estadística:</p>
+      <ul style="margin:0 0 6px;padding-left:20px">
+        <li><b>Dirección.</b> Si cuando <i>x</i> aumenta, <i>y</i> <b>tiende a aumentar</b>, la relación es <b>positiva</b> (los puntos suben de izquierda a derecha). Si <i>y</i> <b>tiende a disminuir</b>, es <b>negativa</b> (los puntos bajan). Si no tiene que ver, no hay dirección.</li>
+        <li><b>Grado de linealidad.</b> Qué tanto se parece la nube de puntos a una línea recta, es decir, qué tan seguido se pasa: <b>casi siempre → fuerte</b>; <b>muchas veces → moderada</b>; <b>pocas veces → débil</b>; si <b>no tiene que ver → nula</b>.</li>
+      </ul>
+      <div class="mini-ej" id="ejemplos"></div>
+    </div>
     <div class="q">
-      <label for="m1q1"><span class="qn">1.</span>Contrasta tus conjeturas con lo que observaste en cada diagrama. ¿En cuáles acertaste? ¿Cuál te sorprendió y por qué?</label>
+      <p class="flabel"><span class="qn">1.</span>Ahora clasifica con estos nombres cada diagrama que construiste en el simulador.</p>
+      <div class="scroll"><table id="tablaClasif"></table></div>
+      <div class="actions"><button type="button" class="sec mini" id="chkClasif">Revisar</button></div>
+      <div class="msg" id="msgClasif" hidden></div>
+    </div>
+    <div class="q">
+      <label for="m1q1"><span class="qn">2.</span>Contrasta tus conjeturas del paso 1 con lo que observaste, usando ahora las palabras dirección y grado de linealidad. ¿En cuáles acertaste? ¿Cuál te sorprendió y por qué?</label>
       <textarea id="m1q1"></textarea>
     </div>
     <div class="q">
-      <label for="m1q2"><span class="qn">2.</span>¿Cuál de las parejas tiene pendiente negativa? Explica en su contexto qué significa que la relación sea negativa.</label>
+      <label for="m1q2"><span class="qn">3.</span>¿Cuál de las parejas tiene relación negativa? Explica en su contexto qué significa que la relación sea negativa.</label>
       <textarea id="m1q2"></textarea>
     </div>
     <div class="q">
-      <label for="m1q3"><span class="qn">3.</span>Inferencia informal: con base en la muestra, ¿crees que en todo el CCH quienes usan más el celular antes de dormir duermen menos? ¿Qué tan seguro estás y por qué?</label>
+      <label for="m1q3"><span class="qn">4.</span>Inferencia informal: con base en la muestra, ¿crees que en todo el CCH quienes usan más el celular antes de dormir duermen menos? ¿Qué tan seguro estás y por qué?</label>
       <textarea id="m1q3"></textarea>
     </div>
   </section>
@@ -992,10 +1030,47 @@ function(t){t.__bidiEngine__=t.prototype.__bidiEngine__=function(t){var r,n,i,a,
 
   // ---------- Momento 1 ----------
   const CONJ = ["est_peso", "brazo_palmo", "cel_sueno", "calz_calif"];
-  $("conjeturas").innerHTML = CONJ.map((k, i) => `<div class="q"><p class="flabel"><span class="qn">${i + 1}.</span>${esc(DS[k].xlab)} y ${esc(DS[k].ylab)}</p>
-    <div class="conj"><select id="cj${i}d" aria-label="Dirección ${i + 1}"><option value="">Dirección…</option><option>Positiva</option><option>Negativa</option><option>Sin dirección</option></select><select id="cj${i}f" aria-label="Grado ${i + 1}"><option value="">Grado de linealidad…</option><option>Nula</option><option>Débil</option><option>Moderada</option><option>Fuerte</option></select></div>
-    <label for="cj${i}t" class="hint">¿Por qué lo piensas?</label><textarea id="cj${i}t" style="min-height:56px"></textarea></div>`).join("");
+  const PREG = {
+    est_peso: { p: "Si un estudiante es más alto que otro, ¿qué crees que pasa con su peso?", o: ["Tiende a pesar más", "Tiende a pesar menos", "No tiene que ver"] },
+    brazo_palmo: { p: "Si un estudiante tiene el brazo más largo que otro, ¿qué crees que pasa con su palmo?", o: ["Tiende a ser más grande", "Tiende a ser más chico", "No tiene que ver"] },
+    cel_sueno: { p: "Si un estudiante usa más el celular antes de dormir, ¿qué crees que pasa con sus horas de sueño?", o: ["Tiende a dormir más", "Tiende a dormir menos", "No tiene que ver"] },
+    calz_calif: { p: "Si un estudiante calza un número más grande, ¿qué crees que pasa con su calificación?", o: ["Tiende a sacar más", "Tiende a sacar menos", "No tiene que ver"] }
+  };
+  const FREC = ["Casi siempre (en casi todos)", "Muchas veces (en la mayoría, con excepciones)", "Pocas veces (solo en algunos)"], NO_APLICA = "No aplica: no tiene que ver";
+  const A_DIR = ["Positiva", "Negativa", "Sin dirección"], A_GRADO = { "Casi siempre": "Fuerte", "Muchas veces": "Moderada", "Pocas veces": "Débil", "No se cumple": "Nula" };
+  $("conjeturas").innerHTML = CONJ.map((k, i) => `<div class="q"><p class="flabel"><span class="qn">${i + 1}.</span>${esc(PREG[k].p)}</p>
+    <div class="conj"><div><label for="cj${i}d" class="hint"><b>a)</b> ¿Qué crees que pasa?</label><select id="cj${i}d"><option value="">Elige una opción…</option>${PREG[k].o.map(o => `<option>${o}</option>`).join("")}</select></div><div><label for="cj${i}f" class="hint"><b>b)</b> ¿Qué tan seguido pasa?</label><select id="cj${i}f"><option value="">Elige una opción…</option>${FREC.map(o => `<option>${o}</option>`).join("")}<option hidden>${NO_APLICA}</option></select></div></div>
+    <label for="cj${i}t" class="hint"><b>c)</b> ¿Por qué lo piensas?</label><textarea id="cj${i}t" style="min-height:56px"></textarea></div>`).join("");
+  function syncConj(i) { const d = $(`cj${i}d`), f = $(`cj${i}f`), no = d.value === "No tiene que ver"; if (no) { f.value = NO_APLICA; f.disabled = true; } else { f.disabled = false; if (f.value === NO_APLICA) f.value = ""; } }
+  CONJ.forEach((k, i) => $(`cj${i}d`).addEventListener("change", () => { syncConj(i); S.campos[`cj${i}f`] = $(`cj${i}f`).value; guardar(); }));
   const sim1 = Simulador({ id: "sim1", momento: "Momento 1", datos: CONJ, controles: {} });
+  // Ejemplos ilustrativos (no son los datos de la muestra)
+  const EJ = [["Positiva fuerte", 0.95], ["Positiva débil", 0.35], ["Negativa moderada", -0.65], ["Nula", 0]];
+  $("ejemplos").innerHTML = EJ.map((e, k) => `<figure><canvas data-ej="${k}" role="img" aria-label="Ejemplo: relación ${e[0]}"></canvas><figcaption>${e[0]}</figcaption></figure>`).join("");
+  function dibujarEjemplos() {
+    document.querySelectorAll("[data-ej]").forEach(cv => {
+      const k = +cv.dataset.ej, r = EJ[k][1], rnd = azar(9000 + k), g = () => { let u = 0; while (!u) u = rnd(); return Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * rnd()); };
+      const W = Math.max(90, cv.clientWidth || 120), H = Math.round(W * 0.75), ctx = lienzo(cv, W, H), m = 8;
+      ctx.fillStyle = "#FFFFFF"; ctx.fillRect(0, 0, W, H); ctx.strokeStyle = "#7A8599"; ctx.lineWidth = 1.2; ctx.beginPath(); ctx.moveTo(m, m); ctx.lineTo(m, H - m); ctx.lineTo(W - m, H - m); ctx.stroke();
+      for (let i = 0; i < 26; i++) { const x = g(), y = r * x + Math.sqrt(1 - r * r) * g(); punto(ctx, m + 6 + (x + 2.6) / 5.2 * (W - 2 * m - 10), H - m - 6 - (y + 2.6) / 5.2 * (H - 2 * m - 10), Math.max(2.4, W / 50), AZUL); }
+    });
+  }
+  const gradoDe = (r) => { const v = Math.abs(r); return v >= 0.8 ? "Fuerte" : v >= 0.5 ? "Moderada" : v >= 0.2 ? "Débil" : "Nula"; };
+  const dirDe = (r) => Math.abs(r) < 0.2 ? "Sin dirección" : r > 0 ? "Positiva" : "Negativa";
+  const GR = ["Nula", "Débil", "Moderada", "Fuerte"];
+  $("tablaClasif").innerHTML = `<thead><tr><th>Pareja</th><th>Dirección</th><th>Grado de linealidad</th></tr></thead><tbody>` + CONJ.map((k, i) => `<tr><td>${esc(DS[k].nombre)}</td><td><select id="cl${i}d" aria-label="Dirección ${esc(DS[k].nombre)}"><option value="">Elige…</option>${A_DIR.map(o => `<option>${o}</option>`).join("")}</select></td><td><select id="cl${i}g" aria-label="Grado ${esc(DS[k].nombre)}"><option value="">Elige…</option>${GR.map(o => `<option>${o}</option>`).join("")}</select></td></tr>`).join("") + "</tbody>";
+  $("chkClasif").addEventListener("click", () => {
+    let bien = 0, faltan = 0;
+    CONJ.forEach((k, i) => {
+      const r = stats(DS[k].p).r, d = $(`cl${i}d`), g = $(`cl${i}g`);
+      if (!d.value || !g.value) { faltan++; return; }
+      const okD = d.value === dirDe(r), okG = Math.abs(GR.indexOf(g.value) - GR.indexOf(gradoDe(r))) <= (gradoDe(r) === "Moderada" ? 1 : 0) && !(gradoDe(r) === "Moderada" && g.value === "Nula");
+      marcar(d, okD); marcar(g, okG); if (okD && okG) bien++;
+    });
+    if (faltan) return mostrar("msgClasif", "warn", `Te falta clasificar ${faltan} pareja(s).`);
+    bien === 4 ? mostrar("msgClasif", "ok", "¡Muy bien! Brazo y palmo tienen una relación positiva fuerte; estatura y peso, positiva moderada; celular y sueño, negativa moderada; y calzado y calificación no tienen relación. En el momento 2 aprenderás a medir el grado con un número.")
+      : mostrar("msgClasif", "mal", `Llevas ${bien} de 4. Regresa al simulador: fíjate si los puntos suben o bajan de izquierda a derecha, y qué tanto se parecen a una línea recta.`);
+  });
 
   // ---------- Momento 2: ordenar ----------
   const OR = DATA.orden, LET = "ABCDEFGH";
@@ -1131,11 +1206,12 @@ function(t){t.__bidiEngine__=t.prototype.__bidiEngine__=function(t){var r,n,i,a,
 
   // ---------- Guardado de campos ----------
   const CAMPOS = ["nombre", "grupo", "m1q1", "m1q2", "m1q3", "m2q1", "m2q2", "m2q3", "m3q1", "m4q1", "m4q2", "m5q1", "m5q2", "m6a", "m6b", "m6c", "m6q3", "m7q0", "m7q1", "m7q2", "m7q3"];
-  CONJ.forEach((c, k) => CAMPOS.push(`cj${k}d`, `cj${k}f`, `cj${k}t`));
+  CONJ.forEach((c, k) => CAMPOS.push(`cj${k}d`, `cj${k}f`, `cj${k}t`, `cl${k}d`, `cl${k}g`));
   CAMPOS.forEach(id => { const el = $(id); if (S.campos[id] != null) el.value = S.campos[id]; el.addEventListener("input", () => { S.campos[id] = el.value; el.classList.remove("bien", "malo"); guardar(); }); el.addEventListener("change", () => { S.campos[id] = el.value; guardar(); }); });
+  CONJ.forEach((k, i) => syncConj(i));
   ["m6r2"].forEach(nm => { const v = S.campos["r_" + nm]; document.querySelectorAll(`input[name="${nm}"]`).forEach(r => { if (r.value === v) r.checked = true; r.addEventListener("change", () => { S.campos["r_" + nm] = r.value; guardar(); }); }); });
 
-  function todo() { [sim1, sim3, sim4, sim7].forEach(s => s.dibujar()); pintarOrden(); }
+  function todo() { [sim1, sim3, sim4, sim7].forEach(s => s.dibujar()); pintarOrden(); dibujarEjemplos(); }
   if (location.hash === "#prueba") window.__lab = { sim1, sim3, sim4, sim7, S: () => S, datosDe };
   aplicarBloqueo(); todo(); pintarTabAjuste(); pintarFotos();
   let tR = null, anchoPrevio = window.innerWidth; window.addEventListener("resize", () => { if (window.innerWidth === anchoPrevio) return; anchoPrevio = window.innerWidth; clearTimeout(tR); tR = setTimeout(todo, 150); });
@@ -1166,7 +1242,10 @@ function(t){t.__bidiEngine__=t.prototype.__bidiEngine__=function(t){var r,n,i,a,
     esp(1); doc.setDrawColor(...gris); doc.setLineWidth(0.3); doc.line(M, y, W - M, y); esp(3);
 
     titulo("Momento 1. Conjeturas y diagramas de dispersión");
-    CONJ.forEach((k, i) => { const est = stats(DS[k].p); preg(`${i + 1}. ${DS[k].xlab} y ${DS[k].ylab}: conjetura ${$(`cj${i}d`).value || "-"}, ${$(`cj${i}f`).value || "-"}  (en el simulador: r = ${fx(est.r, 3)})`, $(`cj${i}t`).value); });
+    texto("Paso 1. Conjeturas", 10.5, "bold", tinta);
+    CONJ.forEach((k, i) => { const d = $(`cj${i}d`).value, f = $(`cj${i}f`).value; preg(`${i + 1}. ${PREG[k].p} Respuesta: ${d || "-"}; ${f || "-"}.`, $(`cj${i}t`).value); });
+    texto("Paso 3. Clasificación con los nombres de estadística", 10.5, "bold", tinta);
+    CONJ.forEach((k, i) => { const r = stats(DS[k].p).r; texto(`${DS[k].nombre}: ${$(`cl${i}d`).value || "-"}, ${$(`cl${i}g`).value || "-"}   (de acuerdo con los datos: ${dirDe(r).toLowerCase()}, ${gradoDe(r).toLowerCase()})`, 10); }); esp(2);
     ["m1q1", "m1q2", "m1q3"].forEach(id => preg(etq(id), $(id).value));
 
     titulo("Momento 2. Diagramas ordenados por su correlación");
